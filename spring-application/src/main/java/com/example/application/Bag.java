@@ -7,23 +7,27 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
 @Document(collection = "bags")
-@Setter
+@Builder
+@AllArgsConstructor
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@Getter
+@Setter
 public class Bag {
 
-
     @Id
-    String id;
+    private String id;
 
-    @Getter
-    @NonNull String owner;
+    @NonNull
+    private String owner;
 
-    @NonNull List<Item> items;
+    @NonNull
+    private List<Item> items;
 
     public int itemsCount() {
         return items.size();
@@ -35,5 +39,6 @@ public class Bag {
                 .reduce(Integer::sum)
                 .orElse(0);
     }
+
 }
 

@@ -9,15 +9,18 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 
 @Document(collection = "items")
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@Builder
+@AllArgsConstructor
 @RequiredArgsConstructor
 @Setter
 @Getter
 public class Item {
 
-    @Id String id;
+    @Id
+    private String id;
 
-    @NonNull String name;
+    @NonNull
+    private String name;
 
-    int price;
+    private int price;
 }
