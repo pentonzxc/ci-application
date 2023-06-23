@@ -1,0 +1,6 @@
+spring:
+  data:
+    mongodb:
+      database: ci-app
+      uri: "mongodb://localhost:27017/ci-app"
+
