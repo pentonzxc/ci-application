@@ -1,13 +1,15 @@
 package com.example.application;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
+@RequiredArgsConstructor
 public class BagService {
-    BagRepository bagRepository;
 
+    final BagRepository bagRepository;
 
     public Mono<Bag> create(Bag bag) {
         return bagRepository.save(bag);

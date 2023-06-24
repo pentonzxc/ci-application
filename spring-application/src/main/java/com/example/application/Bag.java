@@ -20,6 +20,8 @@ import java.util.List;
 @Setter
 public class Bag {
 
+    public Bag() {}
+
     @Id
     private String id;
 

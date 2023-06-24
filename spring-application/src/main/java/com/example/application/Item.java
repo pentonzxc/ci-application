@@ -2,13 +2,10 @@ package com.example.application;
 
 
 import lombok.*;
-import lombok.experimental.FieldDefaults;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 
 
-@Document(collection = "items")
 @Builder
 @AllArgsConstructor
 @RequiredArgsConstructor
@@ -16,8 +13,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Getter
 public class Item {
 
-    @Id
-    private String id;
+    public Item() {}
 
     @NonNull
     private String name;
