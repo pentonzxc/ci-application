@@ -2,33 +2,29 @@ package com.example.application;
 
 
 import lombok.*;
-import lombok.experimental.FieldDefaults;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.annotation.Id;
+import org.bson.codecs.pojo.annotations.BsonProperty;
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 
 @Document(collection = "bags")
 @Builder
 @AllArgsConstructor
-@RequiredArgsConstructor
 @Getter
 @Setter
+@ToString
 public class Bag {
 
-    public Bag() {}
+    public Bag() {
+    }
 
-    @Id
-    private String id;
+    @BsonProperty("_id")
+    private ObjectId id;
 
-    @NonNull
     private String owner;
 
-    @NonNull
     private List<Item> items;
 
     public int itemsCount() {

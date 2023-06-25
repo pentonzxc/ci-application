@@ -1,7 +1,10 @@
 package com.example.application;
 
+import lombok.ToString;
+
 import java.util.List;
 import java.util.stream.Collectors;
+
 
 public record BagData(String owner, List<ItemData> items) {
 
@@ -9,9 +12,9 @@ public record BagData(String owner, List<ItemData> items) {
 //  @formatter:off
         return Bag.builder()
                 .owner(bagData.owner)
-                .items(bagData.items.stream()
+                .items(bagData.items != null ? bagData.items.stream()
                         .map((ItemData::toEntity))
-                        .collect(Collectors.toList()))
+                        .collect(Collectors.toList()) : null)
                 .build();
 //  @formatter:on
     }
