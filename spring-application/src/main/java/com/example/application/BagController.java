@@ -2,9 +2,9 @@ package com.example.application;
 
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.parsing.Problem;
+import lombok.extern.slf4j.Slf4j;
+import org.bson.types.ObjectId;
 import org.springframework.http.MediaType;
-import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -13,7 +13,8 @@ import static com.example.application.BagData.toEntity;
 
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/bags")
+@Slf4j
 @RequiredArgsConstructor
 public class BagController {
 
@@ -43,8 +44,8 @@ public class BagController {
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
-    Mono<Void> add(@RequestBody BagData bag) {
-        return bagService.create(toEntity(bag)).then();
+    Mono<String> add(@RequestBody BagData bag) {
+        return bagService.create(toEntity(bag));
     }
 
 
@@ -53,10 +54,15 @@ public class BagController {
             method = RequestMethod.PUT,
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
-    Mono<Void> update(@PathVariable("id") String id, @RequestBody BagData bag) {
+    Mono<Bag> update(@PathVariable("id") String id, @RequestBody BagData bag) {
         return Mono.defer(() -> Mono.just(toEntity(bag)))
-                .doOnNext(b -> b.setId(id))
+                .log()
+                .doOnNext(b ->
+                {
+                    b.setId(new ObjectId(id));
+                    log.info("Update bag - {}", b);
+                })
                 .flatMap(bagService::update)
-                .then();
+                .doOnNext((b) -> log.info("Updated - {}" , b));
     }
 }
