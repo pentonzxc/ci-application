@@ -1,0 +1,35 @@
+type Query {
+    getBagById(id: ID!) : Bag
+    getAllBags : [Bag]
+}
+
+type Mutation {
+    createBag(bag : InputBag) : ID
+    updateBag(id : ID! , bag : InputBag) : Bag
+}
+
+type Bag {
+    id: ID
+    owner: String
+    items: [Item]
+}
+
+
+type Item {
+    name: String
+    price: Int
+}
+
+input InputBag {
+    id: ID
+    owner: String
+    items: [InputItem]
+}
+
+input InputItem {
+    name: String
+    price: Int
+}
+
+
+

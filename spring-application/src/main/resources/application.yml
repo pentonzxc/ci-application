@@ -1,4 +1,7 @@
 spring:
+  graphql:
+    graphiql:
+      enabled: true
   data:
     mongodb:
       database: ci-app

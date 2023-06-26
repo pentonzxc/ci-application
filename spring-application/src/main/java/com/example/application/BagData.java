@@ -1,12 +1,13 @@
 package com.example.application;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.ToString;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 
-public record BagData(String owner, List<ItemData> items) {
+public record BagData(@JsonProperty("owner") String owner, @JsonProperty("items") List<ItemData> items) {
 
     public static Bag toEntity(BagData bagData) {
 //  @formatter:off
