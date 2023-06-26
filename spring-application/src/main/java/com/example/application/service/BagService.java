@@ -58,7 +58,16 @@ public class BagService {
 
 
     public Mono<Bag> find(String id) {
-        return Mono.from(bagCollection.find(Filters.eq("_id", new ObjectId(id))).first());
+        return Mono.defer(() -> {
+                    try {
+                        return Mono.from(bagCollection.find(Filters.eq("_id", new ObjectId(id))).first());
+                    } catch (Exception ex) {
+                        return Mono.error(ex);
+                    }
+                })
+                .doOnNext((bag) -> log.info("Bag :: {}" ,bag))
+                .switchIfEmpty(Mono.error(new EntityNotFoundException("Don't exist user with id :: " + id)))
+                .onErrorMap(EntityNotFoundException::new);
     }
 
 

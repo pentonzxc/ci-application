@@ -7,6 +7,7 @@ import com.example.application.model.Bag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
@@ -28,7 +29,7 @@ public class BagController {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    Mono<Bag> bag(@PathVariable String id) {
+    Mono<Bag> find(@PathVariable String id) {
         return bagService.find(id);
     }
 
@@ -37,7 +38,7 @@ public class BagController {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    Flux<Bag> bags() {
+    Flux<Bag> findAll() {
         return bagService.findAll();
     }
 
@@ -45,8 +46,10 @@ public class BagController {
     @RequestMapping(
             path = "/add",
             method = RequestMethod.POST,
-            consumes = MediaType.APPLICATION_JSON_VALUE
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.TEXT_PLAIN_VALUE
     )
+    @ResponseStatus(HttpStatus.CREATED)
     Mono<String> add(@RequestBody BagData bag) {
         return bagService.create(toEntity(bag));
     }
@@ -66,6 +69,15 @@ public class BagController {
                     log.info("Update bag - {}", b);
                 })
                 .flatMap(bagService::update)
-                .doOnNext((b) -> log.info("Updated - {}" , b));
+                .doOnNext((b) -> log.info("Updated - {}", b));
+    }
+
+
+    @RequestMapping(
+            path = "/{id}",
+            method = RequestMethod.DELETE
+    )
+    Mono<Void> remove(@PathVariable("id") String id) {
+        return bagService.delete(id);
     }
 }

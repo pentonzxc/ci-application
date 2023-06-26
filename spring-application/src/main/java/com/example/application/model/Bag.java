@@ -1,6 +1,8 @@
 package com.example.application.model;
 
 
+import com.example.application.config.ObjectIdSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.*;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.bson.types.ObjectId;
@@ -21,6 +23,7 @@ public class Bag {
     }
 
     @BsonProperty("_id")
+    @JsonSerialize(using = ObjectIdSerializer.class)
     private ObjectId id;
 
     private String owner;
@@ -37,6 +40,5 @@ public class Bag {
                 .reduce(Integer::sum)
                 .orElse(0);
     }
-
 }
 
