@@ -1,6 +1,9 @@
-package com.example.application;
+package com.example.application.controller;
 
 
+import com.example.application.service.BagService;
+import com.example.application.data.BagData;
+import com.example.application.model.Bag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
@@ -9,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import static com.example.application.BagData.toEntity;
+import static com.example.application.data.BagData.toEntity;
 
 
 @RestController

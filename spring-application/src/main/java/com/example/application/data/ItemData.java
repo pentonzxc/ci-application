@@ -1,4 +1,6 @@
-package com.example.application;
+package com.example.application.data;
+
+import com.example.application.model.Item;
 
 public record ItemData(String name, int price) {
 

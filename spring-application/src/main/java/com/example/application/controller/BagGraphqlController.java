@@ -1,21 +1,20 @@
-package com.example.application;
+package com.example.application.controller;
 
 
-import graphql.language.OperationDefinition;
-import graphql.schema.DataFetcher;
+import com.example.application.service.BagService;
+import com.example.application.data.BagData;
+import com.example.application.model.Bag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
-import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.stereotype.Controller;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import static com.example.application.BagData.toEntity;
+import static com.example.application.data.BagData.toEntity;
 
 @Controller
 @Slf4j

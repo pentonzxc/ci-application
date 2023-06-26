@@ -1,7 +1,7 @@
-package com.example.application;
+package com.example.application.data;
 
+import com.example.application.model.Bag;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.ToString;
 
 import java.util.List;
 import java.util.stream.Collectors;

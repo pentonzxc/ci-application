@@ -1,24 +1,17 @@
-package com.example.application;
+package com.example.application.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.example.application.model.Bag;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.client.model.*;
-import com.mongodb.reactivestreams.client.MongoClient;
 import com.mongodb.reactivestreams.client.MongoCollection;
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.bson.BsonInvalidOperationException;
-import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
-import org.springframework.data.mongodb.core.query.UpdateDefinition;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import javax.print.Doc;
-import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

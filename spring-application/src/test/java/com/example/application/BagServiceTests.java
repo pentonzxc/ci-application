@@ -1,6 +1,8 @@
 package com.example.application;
 
 
+import com.example.application.model.Bag;
+import com.example.application.service.BagService;
 import com.mongodb.reactivestreams.client.MongoCollection;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.AfterEach;

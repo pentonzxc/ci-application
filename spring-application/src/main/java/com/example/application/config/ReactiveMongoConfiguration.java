@@ -1,4 +1,4 @@
-package com.example.application;
+package com.example.application.config;
 
 
 import com.mongodb.ConnectionString;
