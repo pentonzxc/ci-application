@@ -10,10 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.reactivestreams.client.MongoCollection;
 import org.bson.types.ObjectId;
 import org.junit.Rule;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
@@ -30,9 +27,14 @@ import org.springframework.restdocs.operation.preprocess.OperationResponsePrepro
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.restdocs.snippet.Snippet;
 import org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.reactive.server.ExchangeResult;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.context.WebApplicationContext;
+import org.testcontainers.containers.MongoDBContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 import reactor.core.publisher.Mono;
 
 import java.util.function.Consumer;
@@ -49,8 +51,14 @@ import static org.springframework.restdocs.webtestclient.WebTestClientRestDocume
 //@SpringBootTest
 @Import({BagService.class, MongoCollectionsConfig.class, ReactiveMongoConfiguration.class})
 @AutoConfigureRestDocs
-
+//@Testcontainers
 public class WebTests {
+
+//    @Container
+    public static MongoDBContainer mongoDBContainer = new MongoDBContainer("mongo:latest")
+            .withReuse(true);
+
+
 
 
     @Autowired
@@ -90,6 +98,16 @@ public class WebTests {
 //                .baseUrl("http://localhost:8081/bags")
 //                .filter(documentationConfiguration(restDocumentation))
 //                .build();
+    }
+
+    @BeforeAll
+    public static void beforeAll() {
+        mongoDBContainer.start();
+    }
+
+    @DynamicPropertySource
+    static void setProperties(DynamicPropertyRegistry registry) {
+        registry.add("spring.data.mongodb.uri", mongoDBContainer::getReplicaSetUrl);
     }
 
 

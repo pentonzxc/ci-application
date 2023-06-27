@@ -7,32 +7,36 @@ import com.mongodb.reactivestreams.client.MongoCollection;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.MongoDBContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 import java.util.Objects;
 
 
-@Testcontainers
+//@Testcontainers
 @SpringBootTest
 public class BagServiceTests {
 
-    @Container
-    static MongoDBContainer mongoDBContainer = new MongoDBContainer("mongo:latest");
+//    @Container
+    public static MongoDBContainer mongoDBContainer = new MongoDBContainer("mongo:latest");
 
     @Autowired
     BagService bagService;
 
     @Autowired
     MongoCollection<Bag> collection;
+
+    @BeforeAll
+    public static void beforeAll() {
+        mongoDBContainer.start();
+    }
 
 
     @DynamicPropertySource
